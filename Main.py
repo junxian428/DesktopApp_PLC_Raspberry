@@ -13,8 +13,8 @@ class Ui(QtWidgets.QMainWindow):
     def __init__(self):
           super(Ui, self).__init__()
           uic.loadUi('UI/Main.ui', self) # Load the .ui file
-          #self.button = self.findChild(QtWidgets.QPushButton, 'parameter')
-          #self.button.clicked.connect(self.CalculateParameter)
+          self.button = self.findChild(QtWidgets.QPushButton, 'pushButton')
+          self.button.clicked.connect(self.helloWorld)
           #self.button = self.findChild(QtWidgets.QPushButton, 'area')
           #self.button.clicked.connect(self.CalculateArea)
           #self.button = self.findChild(QtWidgets.QPushButton, 'WriteExcel')
@@ -23,7 +23,10 @@ class Ui(QtWidgets.QMainWindow):
           #self.Canvas = self.findChild(QtWidgets.QPushButton, 'pushButton_3')
           #self.Canvas.clicked.connect(self.WriteCanvas)
           self.show() # Show the GUI
-  
+
+
+    def helloWorld(self):
+          print("Hello World")
 
 
 app = QtWidgets.QApplication(sys.argv)
