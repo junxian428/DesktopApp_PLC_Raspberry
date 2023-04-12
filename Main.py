@@ -31,18 +31,23 @@ class Ui(QtWidgets.QMainWindow):
 
 
     def helloWorld(self):
-          # create a serial object with the port name and baud rate
-          # open the serial port
-          ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
+         # configure serial communication
+         ser = serial.Serial(port='/dev/ttyUSB0', baudrate=9600,   bytesize=serial.SEVENBITS, parity=serial.PARITY_EVEN, stopbits=serial.STOPBITS_TWO, timeout=1)
 
-          # write the command to the serial port
-          ser.write(b'@10MS0004000346*')
-          # read the response from the PLC
-          response = ser.read(100)
+         # send data over serial communication
+         ser.write(b'@10RR000400084D*\r')
 
-          print(response)
-    
-          ser.close()
+
+         # read data from serial communication
+         # data = ser.readline()
+         # print(str(data))
+         #while True:
+          #    data = ser.read(1)
+        #      if data:
+          #         print(data)
+
+         # close serial communication
+         ser.close()
 
 
 app = QtWidgets.QApplication(sys.argv)
