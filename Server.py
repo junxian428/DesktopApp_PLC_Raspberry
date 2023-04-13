@@ -130,6 +130,17 @@ while True:
         print("Data mode : " + mode)
         if response_code == "00":
             print("Response: Normal Completion")
+            ############################## Do the address operation
+            Address_Operation = calculation_checksum[5:]
+            print(Address_Operation)
+            ##############################
+            binary_list = []
+            for hex_char in Address_Operation:
+                binary_string = bin(int(hex_char, 16))[2:].zfill(4)
+                binary_list.append(binary_string)
+
+            print(binary_list)
+            ##############################
             if(mode == "RR"):
                 print("CIO AREA READ")
             elif(mode == "RL"):
