@@ -98,8 +98,25 @@ def CheckSum(input_data):
 
 
 while True:
+    # prompt user for input
+    #user_input = input("Enter data to send (type 'exit' to quit): ")
+
+    # check if user entered the exit command
+    #if user_input == 'exit':
+        #break
+    #ser.write(user_input.encode())
+    # convert user input to bytes and send over serial
+    #ser.write(user_input.encode())
+
     data = ser.readline()
     if data:
+        with open('response.txt', 'r') as file:
+            first_line = file.readline().strip()
+
+        print("Sending C-command: " + first_line)
+        address_called = first_line[5:9]
+        number_start_address = int(address_called)
+        print("Address is called start from :" + str(number_start_address))
         #print(CheckSum("@10RR00040008"))
         #print("Byte Data Replied from PLC: " + data)
         data_removed = data[5:]
@@ -131,8 +148,13 @@ while True:
         if response_code == "00":
             print("Response: Normal Completion")
             ############################## Do the address operation
-            Address_Operation = calculation_checksum[5:]
+            Address_Operation = calculation_checksum[7:]
             print(Address_Operation)
+            print("Total Length address returned : " + str(len(Address_Operation)))
+            print("Total Bits " + str(len(Address_Operation) * 4))
+            number_channel = len(Address_Operation) / 4
+            print("1 Channel = 4. That's reason why N address / 4 = N channel: " + str(number_channel))
+
             ##############################
             binary_list = []
             for hex_char in Address_Operation:
@@ -140,6 +162,25 @@ while True:
                 binary_list.append(binary_string)
 
             print(binary_list)
+            # One group = One channel = 15 bytes
+            grouped_list = [binary_list[i:i+4] for i in range(0, len(binary_list), 4)]
+
+            print(grouped_list)
+            grouped_list_len = len(grouped_list)
+            print("Group list element : " + str(len(grouped_list)))
+
+            result_dict = {}
+            key = number_start_address
+
+            for lst in grouped_list:
+                result_dict[key] = lst
+                key += 1
+
+            print(result_dict)
+            print(result_dict[4])
+
+            #print(grouped_list[0])
+
             ##############################
             if(mode == "RR"):
                 print("CIO AREA READ")
