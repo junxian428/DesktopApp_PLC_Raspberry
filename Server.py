@@ -179,6 +179,7 @@ while True:
             print(result_dict)
             result_dict[5][2] = "0100"
             result_dict[5][1] = "1100"
+            print(result_dict)
 
             user_select_channel = 5
             index = 0
