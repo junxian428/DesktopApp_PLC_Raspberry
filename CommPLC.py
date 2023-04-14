@@ -37,12 +37,53 @@ class Ui(QtWidgets.QMainWindow):
           self.button = self.findChild(QtWidgets.QPushButton, 'pushButton_4')
           self.button.clicked.connect(self.refresh)
           self.textBrowser.setText("Waiting for response...")
+          self.button = self.findChild(QtWidgets.QPushButton, 'pushButton_5')
+          self.button.clicked.connect(self.generate_hex)
 
 
           # connect the currentIndexChanged() signal of the ComboBox to our custom slot
           self.comboBox_6.currentIndexChanged.connect(self.on_combobox_select)
 
           self.show() # Show the GUI
+    def generate_hex(self):
+          print("hex")
+          bit_0 = self.textEdit_8.toPlainText()
+          bit_1 = self.textEdit_9.toPlainText()
+          bit_2 = self.textEdit_10.toPlainText()
+          bit_3 = self.textEdit_11.toPlainText()
+
+          Group1 = bit_0 + bit_1 + bit_2 + bit_3 
+
+          bit_4 = self.textEdit_12.toPlainText()
+          bit_5 = self.textEdit_13.toPlainText()
+          bit_6 = self.textEdit_14.toPlainText()
+          bit_7 = self.textEdit_15.toPlainText()
+                    
+                    
+          Group2 = bit_4 + bit_5 + bit_6+ bit_7
+
+
+          bit_8 = self.textEdit_16.toPlainText()
+          bit_9 = self.textEdit_17.toPlainText()
+          bit_10= self.textEdit_18.toPlainText()
+          bit_11 = self.textEdit_19.toPlainText()
+
+          Group3 = bit_8 + bit_9 + bit_10 + bit_11 
+
+
+          bit_12 = self.textEdit_20.toPlainText()
+          bit_13 = self.textEdit_21.toPlainText()
+          bit_14 = self.textEdit_22.toPlainText()
+          bit_15 = self.textEdit_23.toPlainText()
+
+          Group4 = bit_12 + bit_13 + bit_14 + bit_15
+         #A = int(Group1, 2)
+         # B = int(Group2, 2)
+         # C = int(Group3, 2)
+          #D = int(Group4, 2)
+
+         # print(bin(A) + " " + bin(B) + " " +  bin(C) + " ")
+          print(Group1 + " "+ Group2  + " "+ Group3 +" " +Group4)
 
     def on_combobox_select(self):
           print("Selected key:")
