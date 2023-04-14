@@ -180,17 +180,17 @@ while True:
                 key += 1
 
             print(result_dict)
-            result_dict[5][2] = "0100"
-            result_dict[5][1] = "1100"
+            #result_dict[5][2] = "0100"
+            #result_dict[5][1] = "1100"
             print(result_dict)
 
-            user_select_channel = 5
+            user_select_channel = 0
             index = 0
-            print(result_dict[user_select_channel])
-            for i in range(len(result_dict), -1, -1):
-                for j in range(len(result_dict[user_select_channel][i])-1, -1, -1):
-                    print(f"Channel {user_select_channel}.{index}, Condition: {result_dict[user_select_channel][i][j]}")
-                    index += 1
+            #print(result_dict[user_select_channel])
+            #for i in range(len(result_dict), -1, -1):
+            #    for j in range(len(result_dict[user_select_channel][i])-1, -1, -1):
+             #       print(f"Channel {user_select_channel}.{index}, Condition: {result_dict[user_select_channel][i][j]}")
+             #       index += 1
 
             #print(grouped_list[0])
 
