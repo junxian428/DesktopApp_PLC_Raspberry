@@ -110,7 +110,7 @@ while True:
 
     data = ser.readline()
     if data:
-        with open('response.txt', 'r') as file:
+        with open('sending.txt', 'r') as file:
             first_line = file.readline().strip()
 
         print("Sending C-command: " + first_line)
@@ -121,6 +121,9 @@ while True:
         #print("Byte Data Replied from PLC: " + data)
         data_removed = data[5:]
         s_str = data.decode('utf-8') # @10RR0000000000000041*
+        with open('response.txt', 'w') as file:
+            file.write(s_str)
+        
         print("PLC response : " + s_str)
         data_removed_byte = data_removed.decode('utf-8')
         #print("After removed: " + data_removed_byte) 

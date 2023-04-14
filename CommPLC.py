@@ -10,7 +10,7 @@ from openpyxl import load_workbook
 from subprocess import call
 from tkinter import messagebox
 import serial
-
+import time
 
 #global str_total
 #global location
@@ -29,6 +29,8 @@ class Ui(QtWidgets.QMainWindow):
           self.button.clicked.connect(self.printValue)
           self.button = self.findChild(QtWidgets.QPushButton, 'pushButton_2')
           self.button.clicked.connect(self.exit_program)
+          self.textBrowser.setText("Waiting for response...")
+
           self.show() # Show the GUI
 
   
@@ -59,9 +61,16 @@ class Ui(QtWidgets.QMainWindow):
                message = b'@10RR0004000346*\r'
 
                ser.write(message)
-               with open('response.txt', 'w') as file:
+               with open('sending.txt', 'w') as file:
                    file.write(message.decode())
                ser.close()
+               time.sleep(1)
+               with open("response.txt", "r") as file:
+                    file_contents = file.read()
+
+               print(file_contents)
+               self.textBrowser.setText(file_contents)
+
 
            elif(PLC_Type == "Delta PLC"):
               print("Delta PLC")

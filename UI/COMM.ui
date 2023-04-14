@@ -276,6 +276,29 @@
      <string>Back</string>
     </property>
    </widget>
+   <widget class="QTextBrowser" name="textBrowser">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>300</y>
+      <width>381</width>
+      <height>101</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>270</y>
+      <width>171</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Response:</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
