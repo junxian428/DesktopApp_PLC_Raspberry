@@ -53,7 +53,7 @@ class Ui(QtWidgets.QMainWindow):
          message = b'@10RR0004000346*\r'
 
          ser.write(message)
-         with open('response.txt', 'w') as file:
+         with open('sending.txt', 'w') as file:
             file.write(message.decode())
 
 

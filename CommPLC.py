@@ -13,9 +13,10 @@ import serial
 import time
 import tkinter as tk
 
-#global str_total
-#global location
+
+
 class Ui(QtWidgets.QMainWindow):
+
     def __init__(self):
           super(Ui, self).__init__()
           uic.loadUi('UI/COMM.ui', self) # Load the .ui file
@@ -25,7 +26,8 @@ class Ui(QtWidgets.QMainWindow):
           #combo_box.currentIndexChanged.connect(self.selectionChanged)
           self.textEdit.setText("10")
           self.textEdit_2.setText("4.01")
-
+          #global str_total
+          #global Key_Array
           self.button = self.findChild(QtWidgets.QPushButton, 'pushButton')
           self.button.clicked.connect(self.printValue)
           self.button = self.findChild(QtWidgets.QPushButton, 'pushButton_2')
@@ -36,10 +38,41 @@ class Ui(QtWidgets.QMainWindow):
           self.button.clicked.connect(self.refresh)
           self.textBrowser.setText("Waiting for response...")
 
+
+          # connect the currentIndexChanged() signal of the ComboBox to our custom slot
+          self.comboBox_6.currentIndexChanged.connect(self.on_combobox_select)
+
           self.show() # Show the GUI
 
-   
+    def on_combobox_select(self):
+          print("Selected key:")
+          # get the current index of the ComboBox
+          current_index = self.comboBox_6.currentIndex()
 
+          # print the current index to the console
+          print("Current index:", current_index)
+          print("Current Key: " + str(Key[current_index]))
+          #print(Key_Array[Key[current_index]])
+          # assign the values to the text edit widgets
+          list_array = Key_Array[Key[current_index]]
+          print(list_array)
+          #reversed_list = reverse()
+          self.textEdit_8.setText(list_array[3][3])
+          self.textEdit_9.setText(list_array[3][2])
+          self.textEdit_10.setText(list_array[3][1])
+          self.textEdit_11.setText(list_array[3][0])
+          self.textEdit_12.setText(list_array[2][3])
+          self.textEdit_13.setText(list_array[2][2])
+          self.textEdit_14.setText(list_array[2][1])
+          self.textEdit_15.setText(list_array[2][0])
+          self.textEdit_16.setText(list_array[1][3])
+          self.textEdit_17.setText(list_array[1][2])
+          self.textEdit_18.setText(list_array[1][1])
+          self.textEdit_19.setText(list_array[1][0])
+          self.textEdit_20.setText(list_array[0][3])
+          self.textEdit_21.setText(list_array[0][2])
+          self.textEdit_22.setText(list_array[0][1])
+          self.textEdit_23.setText(list_array[0][0])
         ###################################
 
     def generate_checksum_query(self):
@@ -47,8 +80,8 @@ class Ui(QtWidgets.QMainWindow):
           How_many =   self.textEdit_3.toPlainText()
           #How_many =   self.textEdit_4.toPlainText()
           if How_many.isdigit() & Start_address.isdigit():
-               print(Start_address)
-               print(How_many)
+               #print(Start_address)
+               #print(How_many)
                Command_Mode = self.comboBox_2.currentText()
                #print(Command_Mode)
                if(Command_Mode == "RR"):
@@ -124,6 +157,22 @@ class Ui(QtWidgets.QMainWindow):
             #print(file_contents)
 
             self.textBrowser.setText(file_contents)
+            #my_instance = CheckSum()
+            #checksum = my_instance.CheckSum(Command)
+            my_instance = CheckSum()
+            refreshdata = my_instance.response_hex_binary()
+            keys_list = list(refreshdata.keys())
+            global Key_Array
+            global Key
+            Key_Array = refreshdata
+            Key = keys_list
+            print(keys_list)
+            self.comboBox_6.clear()
+            self.comboBox_7.clear()
+
+            for key in keys_list:
+               self.comboBox_6.addItem(str(key))
+               self.comboBox_7.addItem(str(key))
 
     def printValue(self):
            PLC_Type = self.comboBox.currentText()
@@ -261,6 +310,95 @@ class CheckSum:
 
         #print("Final C-Command: " + input_data + str(decimal_value) + str(decimal_value_2) + "*")
         return str(decimal_value) + str(decimal_value_2)
+     
+     def response_hex_binary(self):
+        #print("Hello")
+
+
+        #data = ser.readline()
+        with open('sending.txt', 'r') as file:
+            first_line = file.readline().strip()
+
+
+        with open('response.txt', 'r') as file:
+            data = file.readline().strip()
+
+        print("Sending C-command: " + first_line)
+        address_called = first_line[5:9]
+        number_start_address = int(address_called)
+        print("Address is called start from :" + str(number_start_address))
+        #print(CheckSum("@10RR00040008"))
+        #print("Byte Data Replied from PLC: " + data)
+        data_removed = data[5:]
+        s_str = data
+        #with open('response.txt', 'w') as file:
+        #    file.write(s_str)
+        
+        #print("PLC response : " + s_str)
+        #print("After removed: " + data_removed_byte) 
+        # Response CheckSum 
+        #print("______________________________________")
+        #return_checksum = data[len(data)-4:len(data)-2]
+        #print("Response Check Sum: " + return_checksum)
+        #Calculation CheckSum
+        calculation_checksum = s_str[:len(s_str)-4]
+        #print("The input for checksum : " + str(calculation_checksum))
+        #CheckSum_Result = CheckSum(calculation_checksum)
+        #print("CheckSum : " + CheckSum_Result)
+        ########################################
+        #Compare the received checksum and calculated checksum
+        #if(return_checksum == CheckSum_Result):
+        #    print("PLC -> Raspberry Pi. No CheckSum Error. Can proceed")
+        #else:
+        #    print("PLC -> Raspberry Pi. There is checksum error")
+        ########################################
+        response_code = data[5:7]
+        #print("___________________________________________")
+        #print("Response Code : " + response_code)
+        mode = data[3:5]
+        print("Data mode : " + mode)
+        if response_code == "00":
+            print("Response: Normal Completion")
+            ############################## Do the address operation
+            Address_Operation = data[7:len(data)-3]
+            print("What is this" + Address_Operation)
+            print("Total Length address returned : " + str(len(calculation_checksum)))
+            print("Total Bits " + str(len(Address_Operation) * 4))
+            number_channel = len(Address_Operation) / 4
+            print("1 Channel = 4. That's reason why N address / 4 = N channel: " + str(number_channel))
+
+            ##############################
+            binary_list = []
+            for hex_char in Address_Operation:
+                binary_string = bin(int(hex_char, 16))[2:].zfill(4)
+                binary_list.append(binary_string)
+
+            print(binary_list)
+            # One group = One channel = 15 bytes
+            grouped_list = [binary_list[i:i+4] for i in range(0, len(binary_list), 4)]
+
+            print(grouped_list)
+            grouped_list_len = len(grouped_list)
+            print("Group list element : " + str(len(grouped_list)))
+
+            result_dict = {}
+            key = number_start_address
+
+            for lst in grouped_list:
+                result_dict[key] = lst
+                key += 1
+
+            return result_dict
+            #result_dict[5][2] = "0100"
+            #result_dict[5][1] = "1100"
+            #print(result_dict)
+            #keys_list = list(result_dict.keys())
+            #print(keys_list)
+            #for key in my_dict.keys():
+            #    self.combo_box.addItem(str(key))
+
+            #user_select_channel = 0
+            #index = 0
 
 app = QtWidgets.QApplication(sys.argv)
 window = Ui()
