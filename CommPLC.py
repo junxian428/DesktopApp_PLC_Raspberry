@@ -84,6 +84,14 @@ class Ui(QtWidgets.QMainWindow):
 
          # print(bin(A) + " " + bin(B) + " " +  bin(C) + " ")
           print(Group1 + " "+ Group2  + " "+ Group3 +" " +Group4)
+          my_instance = HexStringToBinary()
+          Hex_1 = my_instance.HexStringToBinary(Group1)
+          Hex_2 = my_instance.HexStringToBinary(Group2)
+          Hex_3 = my_instance.HexStringToBinary(Group3)
+          Hex_4 = my_instance.HexStringToBinary(Group4)
+          Hex_Response = Hex_4 + Hex_3 + Hex_2 + Hex_1
+          print(Hex_Response)
+          self.textEdit_6.setText(Hex_Response)
 
     def on_combobox_select(self):
           print("Selected key:")
@@ -440,7 +448,59 @@ class CheckSum:
 
             #user_select_channel = 0
             #index = 0
-
+class HexStringToBinary:
+     def HexStringToBinary(self, input_data):
+#        0000      0
+#0001      1
+#0010      2
+#0011      3
+#0100      4
+#0101      5
+#0110      6
+#0111      7
+#1000      8
+#1001      9
+#1010      A
+#1011      B
+#1100      C
+#1101      D
+#1110      E
+#1111      F
+        if(input_data=="0000"):
+            return "0"
+        elif(input_data=="0001"):
+            return "1"
+        elif(input_data=="0010"):
+            return "2"
+        elif(input_data=="0011"):
+            return "3"
+        elif(input_data=="0100"):
+            return "4"
+        elif(input_data=="0101"):
+            return "5"
+        elif(input_data=="0110"):
+            return "6"
+        elif(input_data=="0111"):
+            return "7"
+        elif(input_data=="1000"):
+            return "8"
+        elif(input_data=="1001"):
+            return "9"
+        elif(input_data=="1010"):
+            return "A"
+        elif(input_data=="1011"):
+            return "B"
+        elif(input_data=="1100"):
+            return "C"
+        elif(input_data=="1101"):
+            return "D"
+        elif(input_data=="1110"):
+            return "E"
+        elif(input_data=="1111"):
+            return "F"
+        else:
+            return "Error"
+        #return convert_data
 app = QtWidgets.QApplication(sys.argv)
 window = Ui()
 app.exec_()
