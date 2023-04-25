@@ -14,6 +14,7 @@ import time
 import tkinter as tk
 
 
+#@00WR0045*
 
 class Ui(QtWidgets.QMainWindow):
 
