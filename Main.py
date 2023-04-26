@@ -50,7 +50,10 @@ class Ui(QtWidgets.QMainWindow):
          ser = serial.Serial(port='/dev/ttyUSB0', baudrate=9600,   bytesize=serial.SEVENBITS, parity=serial.PARITY_EVEN, stopbits=serial.STOPBITS_TWO, timeout=1)
 
          # send data over serial communication
-         message = b'@00WR00040001000F36*\r'
+         message = b'@00RR0004000145*\r'
+         #@00RR0004000145*\r
+         #@00WR000400FF000F37*\r
+
 
          ser.write(message)
          with open('sending.txt', 'w') as file:
